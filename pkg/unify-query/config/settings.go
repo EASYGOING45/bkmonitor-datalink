@@ -19,4 +19,5 @@ var (
 
 	// 自定义配置路径
 	CustomConfigFilePath string
+	LocalConfigFilePath  = "./unify-query.yaml"
 )

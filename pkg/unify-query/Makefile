@@ -11,7 +11,7 @@ LDFLAGS="-X github.com/TencentBlueKing/bkmonitor-datalink/pkg/unify-query/config
 .PHONY: build
 build: tidy
 	mkdir -p $(RELEASE_PATH)
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(LDFLAGS) -o $(RELEASE_PATH)/$(NAME) ./main.go
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags $(LDFLAGS) -o $(RELEASE_PATH)/$(NAME) ./main.go
 
 .PHONY: debug
 debug: tidy

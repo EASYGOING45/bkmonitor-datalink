@@ -9,11 +9,11 @@ consul:
 redis:
   mode: standalone
   host: 127.0.0.1
-  port: 6379
+  port: 6380
   password:
   master_name:
   sentinel_address:
-    - 127.0.0.1:6379
+    - 127.0.0.1:6380
   sentinel_password:
   database: 0
   dial_timeout: 1s

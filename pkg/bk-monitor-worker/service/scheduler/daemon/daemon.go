@@ -79,6 +79,9 @@ var taskDefine = map[string]OperatorDefine{
 		logger.Info("cmdb_cache_refresh daemon task is initialized")
 		return &cmdbcache.CacheRefreshDaemon{}, nil
 	}},
+	"daemon:demo:demo": {initialFunc: func(ctx context.Context) (Operator, error) {
+		return NewDemoTask(ctx), nil
+	}},
 }
 
 var daemonTaskDimensionOperatorMapping map[string]func(payload []byte) string

@@ -22,9 +22,9 @@ import (
 
 // InitConfig 初始化配置
 func InitConfig() {
-	if CustomConfigFilePath != "" {
+	if LocalConfigFilePath != "" {
 		// Use config file from the flag.
-		viper.SetConfigFile(CustomConfigFilePath)
+		viper.SetConfigFile(LocalConfigFilePath)
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
