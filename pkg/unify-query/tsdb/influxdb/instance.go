@@ -504,8 +504,6 @@ func (i *Instance) query(
 	queryCost := time.Since(startAnaylize)
 	span.Set("query-cost", queryCost.String())
 
-	rangeLeftTime := end.Sub(start)
-	metric.TsDBRequestRangeMinute(ctx, rangeLeftTime, i.InstanceType())
 	metric.TsDBRequestSecond(
 		ctx, queryCost, fmt.Sprintf("%s_http", i.InstanceType()), i.host,
 	)

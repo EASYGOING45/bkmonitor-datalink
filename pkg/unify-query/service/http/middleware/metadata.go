@@ -35,7 +35,7 @@ func MetaData(p *Params) gin.HandlerFunc {
 			spaceUid  = c.Request.Header.Get(metadata.SpaceUIDHeader)
 			skipSpace = c.Request.Header.Get(metadata.SkipSpaceHeader)
 
-			hostName, ip = metadata.GetLocalHost()
+			ip, hostName = metadata.GetLocalHost()
 
 			ctx = c.Request.Context()
 			err error

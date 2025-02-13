@@ -40,6 +40,9 @@ const (
 
 type bkLogConfigEntity struct {
 	Obj *loggingv1alpha1.BkLogConfig
+
+	cacheLabelSelector      func() (labels.Selector, error)
+	cacheAnnotationSelector func() (labels.Selector, error)
 }
 
 func newBkLogConfigEntity(obj *loggingv1alpha1.BkLogConfig) *bkLogConfigEntity {
@@ -52,6 +55,17 @@ func newBkLogConfigEntity(obj *loggingv1alpha1.BkLogConfig) *bkLogConfigEntity {
 	if env != configs.G().LogBkEnv {
 		logger.Warnf("want bkenv '%s', but got '%s', object (%s)", configs.G().LogBkEnv, env, entity.UUID())
 		return nil
+	}
+
+	// 缓存 selector 避免重复实例化
+	labelSelector, err := metav1.LabelSelectorAsSelector(&obj.Spec.LabelSelector)
+	entity.cacheLabelSelector = func() (labels.Selector, error) {
+		return labelSelector, err
+	}
+
+	annotationSelector, err := metav1.LabelSelectorAsSelector(&obj.Spec.AnnotationSelector)
+	entity.cacheAnnotationSelector = func() (labels.Selector, error) {
+		return annotationSelector, err
 	}
 	return entity
 }
@@ -163,19 +177,31 @@ func (e *bkLogConfigEntity) MatchContainerName(containerName string) bool {
 }
 
 func (e *bkLogConfigEntity) MatchAnnotation(matchAnnotations map[string]string) bool {
-	selector, err := metav1.LabelSelectorAsSelector(&e.Obj.Spec.AnnotationSelector)
+	selector, err := e.cacheAnnotationSelector()
 	if err != nil {
 		return false
 	}
-	return selector.Matches(labels.Set(matchAnnotations))
+
+	labelSet := labels.Set(matchAnnotations)
+	if !selector.Matches(labelSet) {
+		return false
+	}
+
+	return true
 }
 
 func (e *bkLogConfigEntity) MatchLabel(matchLabels map[string]string) bool {
-	selector, err := metav1.LabelSelectorAsSelector(&e.Obj.Spec.LabelSelector)
+	selector, err := e.cacheLabelSelector()
 	if err != nil {
 		return false
 	}
-	return selector.Matches(labels.Set(matchLabels))
+
+	labelSet := labels.Set(matchLabels)
+	if !selector.Matches(labelSet) {
+		return false
+	}
+
+	return true
 }
 
 // MatchNamespace 判断 namespace 是否匹配上

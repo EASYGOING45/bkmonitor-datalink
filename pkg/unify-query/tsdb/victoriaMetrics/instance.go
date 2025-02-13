@@ -381,6 +381,9 @@ func (i *Instance) vmQuery(
 
 	headers := metadata.Headers(ctx, i.headers)
 
+	headersString, _ := json.Marshal(headers)
+	span.Set("query-headers", headersString)
+
 	size, err := i.curl.Request(
 		ctx, curl.Post,
 		curl.Options{
@@ -438,8 +441,8 @@ func (i *Instance) DirectQueryRange(
 		return promql.Matrix{}, nil
 	}
 
-	rangeLeftTime := end.Sub(start)
-	metric.TsDBRequestRangeMinute(ctx, rangeLeftTime, i.InstanceType())
+	ves, _ := json.Marshal(vmExpand)
+	log.Infof(ctx, "vm-expand: %s", ves)
 
 	paramsQueryRange := &ParamsQueryRange{
 		InfluxCompatible: i.influxCompatible,
@@ -667,6 +670,10 @@ func (i *Instance) QueryLabelValues(ctx context.Context, query *metadata.Query, 
 	if query.Size > 0 {
 		queryString = fmt.Sprintf(`topk(%d, %s)`, query.Size, queryString)
 	}
+	log.Infof(ctx, "query: %s", queryString)
+	log.Infof(ctx, "start: %s", start.String())
+	log.Infof(ctx, "end: %s", end.String())
+	log.Infof(ctx, "step: %d", step)
 
 	paramsQueryRange := &ParamsQueryRange{
 		InfluxCompatible: i.influxCompatible,

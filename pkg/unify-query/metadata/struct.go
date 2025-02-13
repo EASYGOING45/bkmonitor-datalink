@@ -77,7 +77,6 @@ type Query struct {
 	TagsKey     []string
 
 	DataSource string
-	DataLabel  string
 	TableID    string
 	MetricName string
 
@@ -117,19 +116,11 @@ type Query struct {
 	// Es 查询扩展
 	QueryString   string
 	AllConditions AllConditions
-
-	HighLight HighLight
-
-	Source      []string
-	From        int
-	Size        int
-	Orders      Orders
-	NeedAddTime bool
-}
-
-type HighLight struct {
-	MaxAnalyzedOffset int  `json:"max_analyzed_offset,omitempty"`
-	Enable            bool `json:"enable,omitempty"`
+	Source        []string
+	From          int
+	Size          int
+	Orders        Orders
+	NeedAddTime   bool
 }
 
 type Orders map[string]bool
