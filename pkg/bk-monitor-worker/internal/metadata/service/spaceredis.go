@@ -1904,6 +1904,15 @@ func (s *SpacePusher) composeData(spaceType, spaceId string, tableIdList []strin
 				newFilters := s.buildFiltersByUsage(options, UsageComposeData)
 				filters = append(filters, newFilters...)
 			}
+			if tid == cfg.EventSpecificTableId {
+				if spaceId == cfg.EventSpecificBizId {
+					filters = []map[string]interface{}{
+						{"dimensions.project_id": cfg.EventSpecificSpaceOneId},
+						{"dimensions.project_id": cfg.EventSpecificSpaceTwoId},
+					}
+					logger.Infof("ComposeData: special handling for event specific,space_id->[%s],table_id->[%s], filters: %v", spaceId, tid, filters)
+				}
+			}
 			valueData[tid] = map[string]interface{}{"filters": filters}
 		}
 	}

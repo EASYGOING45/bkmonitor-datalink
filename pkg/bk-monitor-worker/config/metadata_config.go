@@ -42,6 +42,15 @@ var (
 	// BkciSpaceAccessPlugins 允许被项目空间访问业务数据的RT列表
 	BkciSpaceAccessPlugins []string
 
+	// EventSpecificTableId 事件测试结果表ID
+	EventSpecificTableId string
+	// EventSpecificBizId 事件测试业务ID
+	EventSpecificBizId string
+	// EventSpecificSpaceOneId 事件测试空间ID1
+	EventSpecificSpaceOneId string
+	// EventSpecificSpaceTwoId 事件测试空间ID2
+	EventSpecificSpaceTwoId string
+
 	// GlobalFetchTimeSeriesMetricIntervalSeconds 获取指标的间隔时间
 	GlobalFetchTimeSeriesMetricIntervalSeconds int
 	// GlobalTimeSeriesMetricExpiredSeconds 自定义指标过期时间
@@ -161,6 +170,10 @@ func initMetadataVariables() {
 	GlobalIPV6SupportBizList = GetValue("taskConfig.metadata.global.ipv6SupportBizList", []int{})
 	GlobalHostDisableMonitorStates = GetValue("taskConfig.metadata.global.hostDisableMonitorStates", []string{"备用机", "测试中", "故障中"})
 	BkciSpaceAccessPlugins = GetValue("taskConfig.metadata.bcs.bkciSpaceAccessPlugins", []string{})
+	EventSpecificTableId = GetValue("taskConfig.metadata.bcs.eventSpecificTableId", "")
+	EventSpecificBizId = GetValue("taskConfig.metadata.bcs.eventSpecificBizId", "")
+	EventSpecificSpaceOneId = GetValue("taskConfig.metadata.bcs.eventSpecificSpaceOneId", "")
+	EventSpecificSpaceTwoId = GetValue("taskConfig.metadata.bcs.eventSpecificSpaceTwoId", "")
 
 	PingServerEnablePingAlarm = GetValue("taskConfig.metadata.pingserver.enablePingAlarm", true)
 	PingServerEnableDirectAreaPingCollect = GetValue("taskConfig.metadata.pingserver.enableDirectAreaPingCollect", true)
