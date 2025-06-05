@@ -702,6 +702,11 @@ func (s *SpacePusher) PushEsTableIdDetail(tableIdList []string, isPublish bool) 
 
 			tableId := es.TableID
 
+			if tableId == cfg.QueryAliasTestTableId {
+				logger.Infof("PushEsTableIdDetail:table_id %s is query alias test table id, skip", tableId)
+				return
+			}
+
 			sourceType := es.SourceType
 			indexSet := es.IndexSet
 			logger.Infof("PushEsTableIdDetail:start to compose es table id detail, table_id->[%s],source_type->[%s],index_set->[%s]", tableId, sourceType, indexSet)

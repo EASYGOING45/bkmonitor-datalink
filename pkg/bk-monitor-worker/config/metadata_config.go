@@ -51,6 +51,9 @@ var (
 	// EventSpecificSpaceTwoId 事件测试空间ID2
 	EventSpecificSpaceTwoId string
 
+	// QueryAliasTestTableId 查询别名测试结果表ID
+	QueryAliasTestTableId string
+
 	// GlobalFetchTimeSeriesMetricIntervalSeconds 获取指标的间隔时间
 	GlobalFetchTimeSeriesMetricIntervalSeconds int
 	// GlobalTimeSeriesMetricExpiredSeconds 自定义指标过期时间
@@ -174,6 +177,7 @@ func initMetadataVariables() {
 	EventSpecificBizId = GetValue("taskConfig.metadata.bcs.eventSpecificBizId", "")
 	EventSpecificSpaceOneId = GetValue("taskConfig.metadata.bcs.eventSpecificSpaceOneId", "")
 	EventSpecificSpaceTwoId = GetValue("taskConfig.metadata.bcs.eventSpecificSpaceTwoId", "")
+	QueryAliasTestTableId = GetValue("taskConfig.metadata.bcs.queryAliasTestTableId", "")
 
 	PingServerEnablePingAlarm = GetValue("taskConfig.metadata.pingserver.enablePingAlarm", true)
 	PingServerEnableDirectAreaPingCollect = GetValue("taskConfig.metadata.pingserver.enableDirectAreaPingCollect", true)
